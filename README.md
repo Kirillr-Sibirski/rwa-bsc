@@ -1,1 +1,1 @@
-# synthetic-stablecoin-bsc
+# RWA on BSC
