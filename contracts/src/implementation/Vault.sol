@@ -20,7 +20,7 @@ contract Vault is IVault, Ownable {
     mapping(address => uint256) public depositedAt;
     mapping(address => uint256) public interestAccumulated;
 
-    constructor(Stablecoin _token, PriceConsumerV3 _oracle){
+    constructor(Stablecoin _token, PriceConsumerV3 _oracle) Ownable(msg.sender){
         token = _token;
         oracle = _oracle;
     }
