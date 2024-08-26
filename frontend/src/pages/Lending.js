@@ -129,16 +129,16 @@ const Lending = () => {
 
     return (
       <div>
-        <nav className="bg-white p-4">
+        <nav className="bg-[#FCFFFC] p-4">
           <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <div className="flex items-center flex-shrink-0 text-[#FE005B] mr-6">
+            <div className="flex items-center flex-shrink-0 text-[#5A9367] mr-6">
                 <Link to="/" className="font-semibold text-xl">
                   Sorrel Finance
                 </Link>
             </div>
             <div className="block lg:hidden">
                 <button
-                className="flex items-center px-3 py-2 border rounded text-gray-300 border-gray-400 hover:text-white hover:border-white"
+                className="flex items-center px-3 py-2 border rounded text-gray-300 border-gray-400 hover:text-[#FCFFFC] hover:border-[#FCFFFC]"
                 onClick={() => {
                     // Add functionality for mobile menu toggle here
                     console.log('Mobile menu clicked');
@@ -161,20 +161,20 @@ const Lending = () => {
                     <li>
                         <a
                             onClick={connectWallet}
-                            className="block w-full py-2 px-4 text-black bg-[#fff4fc] rounded-md text-center transition duration-300 ease-in-out uppercase font-medium truncate hover:bg-[#fff4fc] "
+                            className="block w-full py-2 px-4 text-black bg-[#90fcf9] rounded-md text-center transition duration-300 ease-in-out uppercase font-medium truncate hover:bg-[#FCFFFC] "
                         >
-                            Connect UP
+                            Connect Wallet
                         </a>
                     </li>
                 </ul>
             </div>
           </div>
         </nav>
-        <div className="bg-white h-screen flex items-center justify-center">
+        <div className="bg-[#FCFFFC] h-screen flex items-center justify-center">
           <div className="max-w-7xl w-full px-4 flex">
             <div className="flex flex-col space-y-4">
               <button
-                className="bg-[#fff4fc] hover:bg-[#fff4fc] text-black font-bold py-2 px-4 rounded"
+                className="bg-[#90fcf9] hover:bg-[#FCFFFC] text-black font-bold py-2 px-4 rounded"
                 onClick={() => handleDeposit(document.getElementById('depositAmount').value)}
               >
                 Deposit
@@ -186,7 +186,7 @@ const Lending = () => {
                 placeholder="Amount"
               />
               <button 
-                className="bg-[#fff4fc] hover:bg-[#fff4fc] text-black font-bold py-2 px-4 rounded"
+                className="bg-[#90fcf9] hover:bg-[#FCFFFC] text-black font-bold py-2 px-4 rounded"
                 onClick={() => handleWithdraw(document.getElementById('withdrawAmount').value)}
               >
                 Withdraw
@@ -198,31 +198,31 @@ const Lending = () => {
                 placeholder="Amount of USD to deposit"
               />
             </div>
-            <div className="ml-auto bg-blue-200 p-6 rounded" style={{ backgroundColor: '#85A0FF' }}>
-              <div className="text-white">
+            <div className="ml-auto bg-blue-200 p-6 rounded" style={{ backgroundColor: '#2d3a3a' }}>
+              <div className="text-[#FCFFFC]">
                 <h2 className="text-2xl font-semibold mb-4">Statistics</h2>
                 <ul className="space-y-4">
                   <li className="flex items-center space-x-4">
-                    <span className="text-white">Current interest rate:</span>
-                    <span className="text-white">{interestRate}%</span>
+                    <span className="text-[#FCFFFC]">Current interest rate:</span>
+                    <span className="text-[#FCFFFC]">{interestRate}%</span>
                   </li>
                   <li className="flex items-center space-x-4">
-                    <span className="text-white">Your debt:</span>
-                    <span className="text-white">{debtValue} USD</span>
+                    <span className="text-[#FCFFFC]">Your debt:</span>
+                    <span className="text-[#FCFFFC]">{debtValue} USD</span>
                   </li>
 
                   <li className="flex items-center space-x-4">
-                    <span className="text-white">Collateral amount:</span>
-                    <span className="text-white">{collateralValueDeployed} LYXt</span>
+                    <span className="text-[#FCFFFC]">Collateral amount:</span>
+                    <span className="text-[#FCFFFC]">{collateralValueDeployed} LYXt</span>
                   </li>
                   <li className="flex items-center space-x-4">
-                    <span className="text-white">Borrowed:</span>
-                    <span className="text-white">{borrowedAmount} USD</span>
+                    <span className="text-[#FCFFFC]">Borrowed:</span>
+                    <span className="text-[#FCFFFC]">{borrowedAmount} USD</span>
                   </li>
                   {/* Borrowable amount */}
                   <li className="flex items-center space-x-4">
                     <button 
-                      className="bg-[#fff4fc] hover:bg-[#fff4fc] text-black font-bold py-2 px-4 rounded"
+                      className="bg-[#90fcf9] hover:bg-[#FCFFFC] text-black font-bold py-2 px-4 rounded"
                       onClick={() => handleBorrowable(document.getElementById('borrowableAmount').value)}
                     >
                       Borrowable amount
@@ -233,12 +233,12 @@ const Lending = () => {
                       className="rounded px-3 py-1 focus:outline-none focus:border-blue-500 text-black"
                       placeholder="Collateral amount"
                     />
-                    <span className="text-white">{borrowableValue} USD</span>
+                    <span className="text-[#FCFFFC]">{borrowableValue} USD</span>
                   </li>
                   {/* Collateral amount */}
                   <li className="flex items-center space-x-4">
                     <button 
-                      className="bg-[#fff4fc] hover:bg-[#fff4fc] text-black font-bold py-2 px-4 rounded"
+                      className="bg-[#90fcf9] hover:bg-[#FCFFFC] text-black font-bold py-2 px-4 rounded"
                       onClick={() => handleCollateral(document.getElementById('collateralAmount').value)}
                     >
                       Withdrawable collateral amount
@@ -249,21 +249,21 @@ const Lending = () => {
                       className="rounded px-3 py-1 focus:outline-none focus:border-blue-500 text-black"
                       placeholder="Repayment amount"
                     />
-                    <span className="text-white">{collateralValue} LYXt</span>
+                    <span className="text-[#FCFFFC]">{collateralValue} LYXt</span>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
-        <footer className="bg-[#FE005B] text-white py-4 text-center">
+        <footer className="bg-[#5A9367] text-[#FCFFFC] py-4 text-center">
           <div className="flex justify-center items-center">
               <p className="mr-2">Powered by EDU Chain.</p>
               <a
               href="https://twitter.com/kirillrybkov" // Replace with your Twitter profile URL
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center text-white hover:text-blue-400"
+              className="flex items-center text-[#FCFFFC] hover:text-blue-400"
               >
               <svg
                   xmlns="http://www.w3.org/2000/svg"
