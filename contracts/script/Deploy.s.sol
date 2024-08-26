@@ -10,7 +10,10 @@ import {Vault} from "../src/implementation/Vault.sol";
 contract DeployContracts is Script {
     function run() external {
         // This deployer account will be used to deploy the contracts
-        address deployer = makeAddr("Deployer");
+        address deployer = tx.origin;
+
+        console.log("Address: ", deployer);
+        console.log("balance: ", deployer.balance);
 
         // Start broadcasting transactions
         vm.startBroadcast(deployer);
@@ -22,7 +25,7 @@ contract DeployContracts is Script {
         PriceConsumerV3 priceConsumer = new PriceConsumerV3();
 
         // Deploy the Stablecoin contract
-        Stablecoin stablecoin = new Stablecoin("EDUCOIN", "EDU");
+        Stablecoin stablecoin = new Stablecoin("USD Sorrel", "USDS");
 
         // Deploy the Vault contract
         Vault vault = new Vault(stablecoin, priceConsumer);

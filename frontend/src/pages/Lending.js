@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import { ethers } from 'ethers';
-import ABI from '../contracts/Vault_ABI.json'
+import ABI from '../contracts/Vault_ABI.json';
 
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+import Onboard from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
 
-const vaultAddress = '0x451C61F95e2333CD68c7850eFAb4E3b3523BF91e';
+const vaultAddress = '0x15C725dc60aCEc8919cad03DA9F6e3759D076824';
 
 const Lending = () => {
   const [borrowableValue, setBorrowableValue] = useState(0);
@@ -16,161 +16,168 @@ const Lending = () => {
   const [debtValue, setDebtValue] = useState('underfined');
   const [collateralValueDeployed, setCollateralValueDeployed] = useState('underfined');
   const [borrowedAmount, setBorrowedAmount] = useState('underfined');
+  const [walletButtonText, setWalletButtonText] = useState('Connect Wallet'); // State for button text
 
-  useEffect( () => {
+  useEffect(() => {
     pingStuff();
-  }); // Empty dependency array ensures this effect runs only once (on mount)
+  });
 
-    const pingStuff = async () => {
-      if(walletAddress != '') {
-        const provider = new ethers.providers.Web3Provider(walletAddress);
-        const signer = provider.getSigner();
-        const vault = new ethers.Contract(vaultAddress, ABI, signer);
-        const tx = await vault.getInterestRate();
-        setInterestRate(tx.toString());
+  const pingStuff = async () => {
+    if (walletAddress !== '') {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const vault = new ethers.Contract(vaultAddress, ABI, provider);
+      console.log("Vault address: ", await provider.getCode(vaultAddress));
+      
+      const interestRate = await vault.getInterestRate();
+      console.log(interestRate.toString());
+      
+      const tx = await vault.getInterestRate();
+      setInterestRate(tx.toString());
 
-        const ty = await vault.getDebt(await signer.getAddress());
-        setDebtValue(ethers.utils.formatEther(ty));
+      const ty = await vault.getDebt(await provider.getAddress());
+      setDebtValue(ethers.utils.formatEther(ty));
 
-        const ti = await vault.getCollateralValue(await signer.getAddress());
-        setCollateralValueDeployed(ethers.utils.formatEther(ti));
+      const ti = await vault.getCollateralValue(await provider.getAddress());
+      setCollateralValueDeployed(ethers.utils.formatEther(ti));
 
-        const tj = await vault.getDebtValue(await signer.getAddress());
-        setBorrowedAmount(ethers.utils.formatEther(tj));
-      }
+      const tj = await vault.getDebtValue(await provider.getAddress());
+      setBorrowedAmount(ethers.utils.formatEther(tj));
     }
+  };
 
-    const connectWallet = async () => {
-        const injected = injectedModule()
-        
-        const onboard = Onboard({
-          wallets: [injected],
-          chains: [
-            {
-              id: '4201',
-              token: 'ETH',
-              label: 'Testnet',
-              rpcUrl: ''
-            },
-          ]
-        })
-        
-        const wallets = await onboard.connectWallet()
-        
-        console.log(wallets)
-        
-        if (wallets[0]) {
-          setWalletAddress(wallets[0].provider);
-        }
-        else {
-          console.error("Invalid wallet.")
-        }
-    };
+  const connectWallet = async () => {
+    const injected = injectedModule();
 
-    const handleDeposit = async (input) => {
-      try {
-        const provider = new ethers.providers.Web3Provider(walletAddress);
-        const signer = provider.getSigner();
-        const vault = new ethers.Contract(vaultAddress, ABI, signer);
+    const onboard = Onboard({
+      wallets: [injected],
+      chains: [
+        {
+          id: '0xa01dc', // Correct hexadecimal for 656476
+          token: 'EDU',
+          label: 'EDU Chain',
+          rpcUrl: 'https://rpc.open-campus-codex.gelato.digital/'
+        },
+      ]
+    });
 
-        console.log(ethers.utils.parseUnits(input, "ether"));
-        
-        const tx = await vault.deposit(ethers.utils.parseUnits(input, "ether"), {value: ethers.utils.parseUnits(input, "ether"),  gasLimit: 3000000, gasPrice: ethers.utils.parseUnits('30', 'gwei')});
-        await tx.wait();
-    
-        alert('Deposit successful!');
-      } catch (error) {
-        console.error('Error occurred:', error);
-      }
-    };
+    const wallets = await onboard.connectWallet();
 
-    const handleWithdraw = async (input) => {
-      try {
-        const provider = new ethers.providers.Web3Provider(walletAddress);
-        const signer = provider.getSigner();
-        const vault = new ethers.Contract(vaultAddress, ABI, signer);
-        
-        const tx = await vault.withdraw(ethers.utils.parseEther(input));
-        await tx.wait();
-    
-        alert('Withraw successful!');
-      } catch (error) {
-        console.error('Error occurred:', error);
-      }
-    };
+    if (wallets[0]) {
+      setWalletAddress(wallets[0].provider);
+      setWalletButtonText('Wallet Connected'); // Update the button text to "Wallet Connected"
+      
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const { chainId } = await provider.getNetwork();
+      const targetChainId = '0xa01dc'; // Correct hexadecimal string for chain ID 656476
+    } else {
+      console.error("Invalid wallet.");
+    }
+  };
 
-    const handleBorrowable = async (input) => { //estimateTokenAmount
-      try {
-        const provider = new ethers.providers.Web3Provider(walletAddress);
-        const signer = provider.getSigner();
-        const vault = new ethers.Contract(vaultAddress, ABI, signer);
-        
-        const tx = await vault.estimateTokenAmount(input);
-        setBorrowableValue(tx.toString());
-        console.log(tx.toString());
-      } catch (error) {
-        console.error('Error occurred:', error);
-      }
-    };
+  const handleDeposit = async (input) => {
+    try {
+      const provider = new ethers.providers.Web3Provider(walletAddress);
+      const signer = provider.getSigner();
+      const vault = new ethers.Contract(vaultAddress, ABI, signer);
 
-    const handleCollateral = async (input) => {
-      try {
-        const provider = new ethers.providers.Web3Provider(walletAddress);
-        const signer = provider.getSigner();
-        const vault = new ethers.Contract(vaultAddress, ABI, signer);
-        
-        const tx = await vault.estimateCollateralAmount(input);
-        setCollateralValue(tx.toString());
-        console.log(tx.toString());
-      } catch (error) {
-        console.error('Error occurred:', error);
-      }
-    };
+      console.log(ethers.utils.parseUnits(input, "ether"));
 
-    return (
-      <div>
-        <nav className="bg-[#FCFFFC] p-4">
-          <div className="max-w-7xl mx-auto flex justify-between items-center">
-            <div className="flex items-center flex-shrink-0 text-[#5A9367] mr-6">
-                <Link to="/" className="font-semibold text-xl">
-                  Sorrel Finance
-                </Link>
-            </div>
-            <div className="block lg:hidden">
-                <button
-                className="flex items-center px-3 py-2 border rounded text-gray-300 border-gray-400 hover:text-[#FCFFFC] hover:border-[#FCFFFC]"
-                onClick={() => {
-                    // Add functionality for mobile menu toggle here
-                    console.log('Mobile menu clicked');
-                }}
-                >
-                <svg
-                    className="h-3 w-3 fill-current"
-                    viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <title>Menu</title>
-                    <path
-                    d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
-                    />
-                </svg>
-                </button>
-            </div>
-            <div className="hidden lg:block">
-                <ul className="flex space-x-4">
-                    <li>
-                        <a
-                            onClick={connectWallet}
-                            className="block w-full py-2 px-4 text-black bg-[#90fcf9] rounded-md text-center transition duration-300 ease-in-out uppercase font-medium truncate hover:bg-[#FCFFFC] "
-                        >
-                            Connect Wallet
-                        </a>
-                    </li>
-                </ul>
-            </div>
+      const tx = await vault.deposit(ethers.utils.parseUnits(input, "ether"), { value: ethers.utils.parseUnits(input, "ether"), gasLimit: 3000000, gasPrice: ethers.utils.parseUnits('30', 'gwei') });
+      await tx.wait();
+
+      alert('Deposit successful!');
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  };
+
+  const handleWithdraw = async (input) => {
+    try {
+      const provider = new ethers.providers.Web3Provider(walletAddress);
+      const signer = provider.getSigner();
+      const vault = new ethers.Contract(vaultAddress, ABI, signer);
+
+      const tx = await vault.withdraw(ethers.utils.parseEther(input));
+      await tx.wait();
+
+      alert('Withdraw successful!');
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  };
+
+  const handleBorrowable = async (input) => { //estimateTokenAmount
+    try {
+      const provider = new ethers.providers.Web3Provider(walletAddress);
+      const signer = provider.getSigner();
+      const vault = new ethers.Contract(vaultAddress, ABI, signer);
+
+      const tx = await vault.estimateTokenAmount(input);
+      setBorrowableValue(tx.toString());
+      console.log(tx.toString());
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  };
+
+  const handleCollateral = async (input) => {
+    try {
+      const provider = new ethers.providers.Web3Provider(walletAddress);
+      const signer = provider.getSigner();
+      const vault = new ethers.Contract(vaultAddress, ABI, signer);
+
+      const tx = await vault.estimateCollateralAmount(input);
+      setCollateralValue(tx.toString());
+      console.log(tx.toString());
+    } catch (error) {
+      console.error('Error occurred:', error);
+    }
+  };
+
+  return (
+    <div>
+      <nav className="bg-[#FCFFFC] p-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center flex-shrink-0 text-[#5A9367] mr-6">
+            <Link to="/" className="font-semibold text-xl">
+              Sorrel Finance
+            </Link>
           </div>
-        </nav>
-        <div className="bg-[#FCFFFC] h-screen flex items-center justify-center">
+          <div className="block lg:hidden">
+            <button
+              className="flex items-center px-3 py-2 border rounded text-gray-300 border-gray-400 hover:text-[#FCFFFC] hover:border-[#FCFFFC]"
+              onClick={() => {
+                // Add functionality for mobile menu toggle here
+                console.log('Mobile menu clicked');
+              }}
+            >
+              <svg
+                className="h-3 w-3 fill-current"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Menu</title>
+                <path
+                  d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div className="hidden lg:block">
+            <ul className="flex space-x-4">
+              <li>
+                <a
+                  onClick={connectWallet}
+                  className="block w-full py-2 px-4 text-black bg-[#90fcf9] rounded-md text-center transition duration-300 ease-in-out uppercase font-medium truncate hover:bg-[#FCFFFC] "
+                >
+                  {walletButtonText} {/* Updated to use dynamic text */}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <div className="bg-[#FCFFFC] h-screen flex items-center justify-center">
           <div className="max-w-7xl w-full px-4 flex">
             <div className="flex flex-col space-y-4">
               <button
@@ -213,11 +220,11 @@ const Lending = () => {
 
                   <li className="flex items-center space-x-4">
                     <span className="text-[#FCFFFC]">Collateral amount:</span>
-                    <span className="text-[#FCFFFC]">{collateralValueDeployed} LYXt</span>
+                    <span className="text-[#FCFFFC]">{collateralValueDeployed} EDU</span>
                   </li>
                   <li className="flex items-center space-x-4">
                     <span className="text-[#FCFFFC]">Borrowed:</span>
-                    <span className="text-[#FCFFFC]">{borrowedAmount} USD</span>
+                    <span className="text-[#FCFFFC]">{borrowedAmount} USDS</span>
                   </li>
                   {/* Borrowable amount */}
                   <li className="flex items-center space-x-4">
@@ -278,7 +285,7 @@ const Lending = () => {
           </div>
           </footer>
       </div>
-    );
+  );
 };
- 
+
 export default Lending;
