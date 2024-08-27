@@ -1,449 +1,448 @@
 [
-    {
-        "type": "constructor",
-        "inputs": [
-            {
-                "name": "_token",
-                "type": "address",
-                "internalType": "contract Stablecoin"
-            },
-            {
-                "name": "_oracle",
-                "type": "address",
-                "internalType": "contract PriceConsumerV3"
-            }
-        ],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "deposit",
-        "inputs": [
-            {
-                "name": "amountToDeposit",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "payable"
-    },
-    {
-        "type": "function",
-        "name": "depositedAt",
-        "inputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "estimateCollateralAmount",
-        "inputs": [
-            {
-                "name": "repaymentAmount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "collateralAmount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "estimateTokenAmount",
-        "inputs": [
-            {
-                "name": "depositAmount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "tokenAmount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getCollateralValue",
-        "inputs": [
-            {
-                "name": "user",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getCurrentInterest",
-        "inputs": [
-            {
-                "name": "user",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getDebt",
-        "inputs": [
-            {
-                "name": "user",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getDebtValue",
-        "inputs": [
-            {
-                "name": "user",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getEthUSDPrice",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getInterestRate",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "pure"
-    },
-    {
-        "type": "function",
-        "name": "getOracle",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getToken",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "getVault",
-        "inputs": [
-            {
-                "name": "userAddress",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "vault",
-                "type": "tuple",
-                "internalType": "struct IVault.Vault",
-                "components": [
-                    {
-                        "name": "collateralAmount",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    },
-                    {
-                        "name": "debtAmount",
-                        "type": "uint256",
-                        "internalType": "uint256"
-                    }
-                ]
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "interestAccumulated",
-        "inputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "interestRate",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "owner",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "renounceOwnership",
-        "inputs": [],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "setOracle",
-        "inputs": [
-            {
-                "name": "_oracle",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "stringToBytes32",
-        "inputs": [
-            {
-                "name": "source",
-                "type": "string",
-                "internalType": "string"
-            }
-        ],
-        "outputs": [
-            {
-                "name": "result",
-                "type": "bytes32",
-                "internalType": "bytes32"
-            }
-        ],
-        "stateMutability": "pure"
-    },
-    {
-        "type": "function",
-        "name": "token",
-        "inputs": [],
-        "outputs": [
-            {
-                "name": "",
-                "type": "address",
-                "internalType": "contract Stablecoin"
-            }
-        ],
-        "stateMutability": "view"
-    },
-    {
-        "type": "function",
-        "name": "transferOwnership",
-        "inputs": [
-            {
-                "name": "newOwner",
-                "type": "address",
-                "internalType": "address"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "function",
-        "name": "withdraw",
-        "inputs": [
-            {
-                "name": "repaymentAmount",
-                "type": "uint256",
-                "internalType": "uint256"
-            }
-        ],
-        "outputs": [],
-        "stateMutability": "nonpayable"
-    },
-    {
-        "type": "event",
-        "name": "Deposit",
-        "inputs": [
-            {
-                "name": "collateralDeposited",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
-            },
-            {
-                "name": "amountMinted",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
-            }
-        ],
-        "anonymous": false
-    },
-    {
-        "type": "event",
-        "name": "OwnershipTransferred",
-        "inputs": [
-            {
-                "name": "previousOwner",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
-            },
-            {
-                "name": "newOwner",
-                "type": "address",
-                "indexed": true,
-                "internalType": "address"
-            }
-        ],
-        "anonymous": false
-    },
-    {
-        "type": "event",
-        "name": "Withdraw",
-        "inputs": [
-            {
-                "name": "collateralWithdrawn",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
-            },
-            {
-                "name": "amountBurned",
-                "type": "uint256",
-                "indexed": false,
-                "internalType": "uint256"
-            }
-        ],
-        "anonymous": false
-    },
-    {
-        "type": "error",
-        "name": "OwnableInvalidOwner",
-        "inputs": [
-            {
-                "name": "owner",
-                "type": "address",
-                "internalType": "address"
-            }
-        ]
-    },
-    {
-        "type": "error",
-        "name": "OwnableUnauthorizedAccount",
-        "inputs": [
-            {
-                "name": "account",
-                "type": "address",
-                "internalType": "address"
-            }
-        ]
-    }
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "stablecoinName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "stablecoinSymbol",
+				"type": "string"
+			},
+			{
+				"internalType": "contract PriceConsumerV3",
+				"name": "_oracle",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "OwnableInvalidOwner",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "OwnableUnauthorizedAccount",
+		"type": "error"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "collateralDeposited",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amountMinted",
+				"type": "uint256"
+			}
+		],
+		"name": "Deposit",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_oracle",
+				"type": "address"
+			}
+		],
+		"name": "setOracle",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "repaymentAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "collateralWithdrawn",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amountBurned",
+				"type": "uint256"
+			}
+		],
+		"name": "Withdraw",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "depositedAt",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "repaymentAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "estimateCollateralAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "collateralAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "depositAmount",
+				"type": "uint256"
+			}
+		],
+		"name": "estimateTokenAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenAmount",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getCollateralValue",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getCurrentInterest",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getDebt",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
+			}
+		],
+		"name": "getDebtValue",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getEthUSDPrice",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getInterestRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getOracle",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getToken",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			}
+		],
+		"name": "getVault",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "collateralAmount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "debtAmount",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct IVault.Vault",
+				"name": "vault",
+				"type": "tuple"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "interestAccumulated",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "interestRate",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "source",
+				"type": "string"
+			}
+		],
+		"name": "stringToBytes32",
+		"outputs": [
+			{
+				"internalType": "bytes32",
+				"name": "result",
+				"type": "bytes32"
+			}
+		],
+		"stateMutability": "pure",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "token",
+		"outputs": [
+			{
+				"internalType": "contract Stablecoin",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
 ]

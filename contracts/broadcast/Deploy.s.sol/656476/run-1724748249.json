@@ -4,7 +4,7 @@
       "hash": null,
       "transactionType": "CREATE",
       "contractName": "MockOracle",
-      "contractAddress": "0x3f1378bed567edffb31ed490a70e6e820b27c055",
+      "contractAddress": "0xc7fb3089bae256a222dce47fb2880d130be9f3c9",
       "function": null,
       "arguments": null,
       "transaction": {
@@ -12,7 +12,7 @@
         "gas": "0x24928",
         "value": "0x0",
         "input": "0x6080604052348015600f57600080fd5b506006600155600080546001600160a01b031916905560ac8060326000396000f3fe6080604052348015600f57600080fd5b506004361060325760003560e01c80638e15f473146037578063f7a3080614604c575b600080fd5b60015460405190815260200160405180910390f35b605c6057366004605e565b600155565b005b600060208284031215606f57600080fd5b503591905056fea2646970667358221220892406992947fd14f60c74f380892d44888480a0bb1609f61875df76bd6f23b864736f6c634300081a0033",
-        "nonce": "0x2",
+        "nonce": "0x0",
         "chainId": "0xa045c"
       },
       "additionalContracts": [],
@@ -23,7 +23,7 @@
   "libraries": [],
   "pending": [],
   "returns": {},
-  "timestamp": 1724748900,
+  "timestamp": 1724748249,
   "chain": 656476,
   "commit": "d1798b2"
 }

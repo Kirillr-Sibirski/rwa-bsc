@@ -9,37 +9,22 @@ import {Vault} from "../src/implementation/Vault.sol";
 
 contract DeployContracts is Script {
     function run() external {
-        // This deployer account will be used to deploy the contracts
         address deployer = tx.origin;
 
         console.log("Address: ", deployer);
         console.log("balance: ", deployer.balance);
 
-        // Start broadcasting transactions
         vm.startBroadcast(deployer);
-
-        // Deploy the MockOracle contract
         MockOracle mockOracle = new MockOracle();
+        // PriceConsumerV3 priceConsumer = new PriceConsumerV3();
+        // Stablecoin stablecoin = new Stablecoin("USD Sorrel", "USDS");
+        // Vault vault = new Vault(stablecoin, priceConsumer);
 
-        // Deploy the PriceConsumerV3 contract
-        PriceConsumerV3 priceConsumer = new PriceConsumerV3();
-
-        // Deploy the Stablecoin contract
-        Stablecoin stablecoin = new Stablecoin("USD Sorrel", "USDS");
-
-        // Deploy the Vault contract
-        Vault vault = new Vault(stablecoin, priceConsumer);
-
-        // Optionally, set the Oracle to the mock oracle if needed
-        vault.setOracle(address(mockOracle));
-
-        // Stop broadcasting transactions
         vm.stopBroadcast();
 
-        // Logging the deployed contract addresses
         console.log("MockOracle deployed at:", address(mockOracle));
-        console.log("PriceConsumerV3 deployed at:", address(priceConsumer));
-        console.log("Stablecoin deployed at:", address(stablecoin));
-        console.log("Vault deployed at:", address(vault));
+        // console.log("PriceConsumerV3 deployed at:", address(priceConsumer));
+        // console.log("Stablecoin deployed at:", address(stablecoin));
+        // console.log("Vault deployed at:", address(vault));
     }
 }

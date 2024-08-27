@@ -20,8 +20,8 @@ contract Vault is IVault, Ownable {
     mapping(address => uint256) public depositedAt;
     mapping(address => uint256) public interestAccumulated;
 
-    constructor(Stablecoin _token, PriceConsumerV3 _oracle) Ownable(msg.sender){
-        token = _token;
+    constructor(string memory stablecoinName, string memory stablecoinSymbol, PriceConsumerV3 _oracle) Ownable(msg.sender) {
+        token = new Stablecoin(stablecoinName, stablecoinSymbol);
         oracle = _oracle;
     }
 
@@ -36,9 +36,8 @@ contract Vault is IVault, Ownable {
         }
     }
 
-    function deposit(uint256 amountToDeposit) override payable external {
-        require(amountToDeposit == msg.value, "Incorrect LYXt amount");
-        uint256 amountToMint = amountToDeposit * getEthUSDPrice();
+    function deposit() override payable external {
+        uint256 amountToMint = msg.value * getEthUSDPrice();
         token.mint(msg.sender, amountToMint);
         // Calculate interest since the last deposit
         if (depositedAt[msg.sender] != 0) {
@@ -49,9 +48,9 @@ contract Vault is IVault, Ownable {
 
         depositedAt[msg.sender] = block.timestamp;
 
-        vaults[msg.sender].collateralAmount += amountToDeposit;
+        vaults[msg.sender].collateralAmount += msg.value;
         vaults[msg.sender].debtAmount += amountToMint;
-        emit Deposit(amountToDeposit, amountToMint);
+        emit Deposit(msg.value, amountToMint);
     }
     
     /**
@@ -60,28 +59,43 @@ contract Vault is IVault, Ownable {
     @param repaymentAmount  the amount of stablecoin that a user is repaying to redeem their collateral for.
      */
     function withdraw(uint256 repaymentAmount) override external {
-        
         require(token.balanceOf(msg.sender) >= repaymentAmount, "not enough tokens in balance");
         
+        // Calculate and accumulate interest
         if (depositedAt[msg.sender] != 0) {
             uint256 timeElapsed = block.timestamp - depositedAt[msg.sender];
             uint256 interest = (vaults[msg.sender].debtAmount * interestRate * timeElapsed) / (365 days * 100);
             interestAccumulated[msg.sender] += interest;
             depositedAt[msg.sender] = block.timestamp;
         }
-        require(repaymentAmount <= (vaults[msg.sender].debtAmount+interestAccumulated[msg.sender]), "withdraw limit exceeded"); 
 
-        depositedAt[msg.sender] = block.timestamp;
+        // Ensure the repaymentAmount covers the debt + interest
+        uint256 totalDebtWithInterest = vaults[msg.sender].debtAmount + interestAccumulated[msg.sender];
+        require(repaymentAmount <= totalDebtWithInterest, "withdraw limit exceeded");
+
+        // Calculate the maximum amount of collateral that can be withdrawn
         uint256 amountToWithdraw = repaymentAmount / getEthUSDPrice();
+
+        // Ensure the user cannot withdraw all the collateral if there's interest
+        uint256 remainingCollateral = vaults[msg.sender].collateralAmount - amountToWithdraw;
+        uint256 requiredCollateralForInterest = interestAccumulated[msg.sender] / getEthUSDPrice();
+        
+        // Ensure at least the required collateral to cover interest is left in the vault
+        require(remainingCollateral >= requiredCollateralForInterest, "cannot withdraw all collateral with outstanding interest");
+
+        // Burn the corresponding amount of tokens
         token.burn(msg.sender, repaymentAmount);
 
+        // Update vault balances
         vaults[msg.sender].collateralAmount -= amountToWithdraw;
         vaults[msg.sender].debtAmount -= repaymentAmount;
+
+        // Transfer the withdrawn amount of collateral back to the user
         payable(msg.sender).transfer(amountToWithdraw);
+
         emit Withdraw(amountToWithdraw, repaymentAmount);
     }
 
-    
     /**
     @notice Returns the details of a vault
     @param userAddress  the address of the vault owner
