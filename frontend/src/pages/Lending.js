@@ -7,7 +7,7 @@ import CustomAlert from './components/CustomAlert';
 import Onboard from '@web3-onboard/core';
 import injectedModule from '@web3-onboard/injected-wallets';
 
-const vaultAddress = '0xA52e572Caf85BF1160Dc63d3e4669a6E12e90b7b';
+const vaultAddress = '0xAFFd2a9cA4A03A6Eb1F7cb4773E8d42f07000cDC';
 
 const Lending = () => {
   const [borrowableValue, setBorrowableValue] = useState(0);
